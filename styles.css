@@ -22,3 +22,18 @@ body {
 table td input[type="text"] {
     min-width: 6rem;
 }
+
+.master-scroll {
+    max-height: 50vh;
+    /* 必要に応じて px や他の値に調整可 */
+    overflow: auto;
+    /* 縦横スクロールを許可 */
+}
+
+.master-scroll thead th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background: var(--bs-light, #f8f9fa);
+    /* Bootstrapのtable-light相当 */
+}
