@@ -23,12 +23,11 @@ const els = {
     masterTbody: $("#masterTbody"),
     masterJson: $("#masterJson"),
 
-    btnAddRow: $("#btnAddRow"),              // ← 位置をフッターへ移設
+    btnAddRow: $("#btnAddRow"),              // ← フッターに配置
     btnDeleteSelected: $("#btnDeleteSelected"),
     btnImport: $("#btnImport"),
     btnExport: $("#btnExport"),
     btnSave: $("#btnSave"),
-    btnReset: $("#btnReset"),
     fileInput: $("#fileInput"),
     checkAll: $("#checkAll"),
 };
@@ -294,10 +293,9 @@ window.addEventListener("DOMContentLoaded", () => {
     els.btnCopy.addEventListener("click", copyOut);
     els.btnDownloadOut.addEventListener("click", downloadOut);
 
-    els.btnAddRow.addEventListener("click", () => addRow());           // ← 新しい配置で動作
+    els.btnAddRow.addEventListener("click", () => addRow());
     els.btnDeleteSelected.addEventListener("click", deleteSelectedRows);
     els.btnSave.addEventListener("click", saveTableToLS);
-    els.btnReset.addEventListener("click", () => renderTable(flattenMaster(SAMPLE_MASTER)));
 
     els.btnImport.addEventListener("click", () => els.fileInput.click());
     els.fileInput.addEventListener("change", async (e) => {
