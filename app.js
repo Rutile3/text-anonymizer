@@ -4,16 +4,12 @@ const escapeReg = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
 /*** LocalStorage Keys ***/
 const LS_MASTER = "masker_master_table_v1";
-const LS_OPTION = "masker_option_v1";
 
 /*** 要素 ***/
 const els = {
     input: $("#input"),
     output: $("#output"),
     stats: $("#stats"),
-    preserveLength: $("#preserveLength"),
-    wordBoundary: $("#wordBoundary"),
-    fillChar: $("#fillChar"),
     btnMask: $("#btnMask"),
     btnCopy: $("#btnCopy"),
     btnDownloadOut: $("#btnDownloadOut"),
@@ -221,24 +217,18 @@ function exportJson() {
 }
 
 /*** 置換エンジン ***/
-function buildPattern(s, wordBoundary) {
-    const isAsciiWord = /^[\w.@+-]+$/.test(s);
-    const wb = wordBoundary && isAsciiWord ? "\\b" : "";
-    return new RegExp(wb + escapeReg(s) + wb, "g");
+function buildPattern(s) {
+    return new RegExp(escapeReg(s), "g");
 }
-function maskWithSameLength(src, fillChar) {
-    const len = [...src].length;
-    return (fillChar || "○").repeat(Math.max(1, len));
-}
-function applyMaster(text, rows, option) {
+function applyMaster(text, rows) {
     let replaced = text;
     let count = 0;
     const sorted = [...rows].sort((a, b) => b.from.length - a.from.length);
     for (const r of sorted) {
-        const rx = buildPattern(r.from, option.wordBoundary);
-        replaced = replaced.replace(rx, (m) => {
+        const rx = buildPattern(r.from);
+        replaced = replaced.replace(rx, () => {
             count++;
-            return option.preserveLength ? maskWithSameLength(m, option.fillChar) : r.to;
+            return r.to;
         });
     }
     return { text: replaced, count };
@@ -247,15 +237,9 @@ function applyMaster(text, rows, option) {
 /*** 実行 ***/
 function runMask() {
     const rows = collectRowsFromTable();
-    const option = {
-        preserveLength: els.preserveLength.checked,
-        wordBoundary: els.wordBoundary.checked,
-        fillChar: els.fillChar.value || "○",
-    };
-    const res = applyMaster(els.input.value || "", rows, option);
+    const res = applyMaster(els.input.value || "", rows);
     els.output.value = res.text;
     els.stats.textContent = `置換 ${res.count} 件 / ルール ${rows.length} 件`;
-    localStorage.setItem(LS_OPTION, JSON.stringify(option));
 }
 
 /*** 出力ユーティリティ ***/
@@ -278,16 +262,6 @@ function downloadOut() {
 window.addEventListener("DOMContentLoaded", () => {
     loadTableFromLS();
     bindTableEvents();
-
-    try {
-        const raw = localStorage.getItem(LS_OPTION);
-        if (raw) {
-            const o = JSON.parse(raw);
-            els.preserveLength.checked = !!o.preserveLength;
-            els.wordBoundary.checked = !!o.wordBoundary;
-            els.fillChar.value = o.fillChar || "○";
-        }
-    } catch { }
 
     els.btnMask.addEventListener("click", runMask);
     els.btnCopy.addEventListener("click", copyOut);

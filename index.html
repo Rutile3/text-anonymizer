@@ -43,33 +43,9 @@
                         <textarea id="output" class="form-control mono" rows="12" readonly></textarea>
                     </div>
                 </div>
-
-                <div class="card shadow-sm mt-4">
-                    <div class="card-header bg-light fw-semibold">オプション</div>
-                    <div class="card-body">
-                        <div class="row g-3">
-                            <div class="col-md-6">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="preserveLength">
-                                    <label class="form-check-label" for="preserveLength">元の長さを維持（○で埋める）</label>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="wordBoundary">
-                                    <label class="form-check-label" for="wordBoundary">英数字は単語境界一致</label>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <label class="form-label">プレースホルダ（長さ維持時）</label>
-                                <input id="fillChar" class="form-control" value="○">
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
 
-            <!-- 右：置換マスター（表編集） -->
+            <!-- 右：置換マスター -->
             <div class="col-lg-6">
                 <div class="card shadow-sm">
                     <div class="card-header bg-light fw-semibold d-flex align-items-center gap-2">
@@ -97,13 +73,13 @@
                                     </tr>
                                 </thead>
                                 <tbody id="masterTbody">
-                                    <!-- 行はJSで描画 -->
+                                    <!-- JSで行を描画 -->
                                 </tbody>
                             </table>
                         </div>
                     </div>
 
-                    <!-- フッター：JSON表示トグル＆行追加ボタン -->
+                    <!-- フッター -->
                     <div class="card-footer small d-flex flex-column gap-2">
                         <div class="d-flex gap-2">
                             <button class="btn btn-sm btn-outline-dark" type="button" data-bs-toggle="collapse"
@@ -120,7 +96,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </main>
