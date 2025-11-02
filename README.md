@@ -114,4 +114,4 @@ text-anonymizer/
 ## 📜 ライセンス
 
 MIT License  
-© 2025 [あなたの名前 or ハンドルネーム]
+© 2025 Rutile3
